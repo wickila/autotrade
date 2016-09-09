@@ -1,0 +1,168 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <title>订单管理小公举</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.css">
+    <style>
+      html{
+      }
+      body {
+        width: 800px;
+        height: 600px;
+        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+        font-size: 100%;
+      }
+
+      .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+      }
+      .btn-circle.btn-lg {
+        width: 50px;
+        height: 50px;
+        padding: 10px 16px;
+        font-size: 18px;
+        line-height: 1.33;
+        border-radius: 25px;
+      }
+      .btn-circle.btn-xl {
+        vertical-align: middle;
+        width: 140px;
+        height: 140px;
+        padding: 10px 16px;
+        font-size: 24px;
+        line-height: 1.33;
+        border-radius: 70px;
+      }
+
+      #getOrdersBtn {
+        /*width: 100%;*/
+      }
+
+      .operate-area{
+        width: 100%;
+        padding-left: 8px;
+        margin-bottom: 0px;
+      }
+
+      .operate-area button{
+        width: 32.7%;
+      }
+
+      .thumb{
+        width: 35px;
+      }
+
+      .table tbody>tr>td{
+          vertical-align: middle;
+      }
+      .table tbody>tr>th{
+          vertical-align: middle;
+      }
+
+      .small{
+        font-size: 10px;
+        color: gray;
+      }
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+     -->
+     <script type="text/javascript" src="jquery-3.0.0.js"></script>
+     <script type="text/javascript" src="js/bootstrap.js"></script>
+     <script type="text/javascript" src="js/bootstrap-select.js"></script>
+     <script type="text/javascript" src="js/i18n/defaults-*.min.js"></script>
+     <script type="text/javascript" src="popup.js"></script>
+  </head>
+  <body>
+    <table width="100%"><tr><td align="center"><h3>订单管理小公举</h3></td></tr></table>
+    <ul>
+      <li>进入后台已卖出宝贝页面。</li>
+      <li>点击“统计订单”按钮，小公举将自动把最近未采购的订单统计出来。</li>
+      <li>将不需要采购的订单取消勾选</li>
+      <li>点击“开始下单”按钮，小公举将把已选订单填入进后台采购系统中。</li>
+      <li>点击”开始标记“按钮，小公举将把已选订单自动标记为蓝色棋子，并且标记为”已采购@by auto_trade“</li>
+      <li>点击“重置工具”按钮，将会将工具重置回初始状态。你可以重新进行上面的操作。</li>
+    </ul>
+    <table valign='middle' class="table has-orders-show" style="display:none;margin-bottom: 0">
+      <tr><td width="85px" align="left" colspan="1">全选&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="all-select"></input></td>
+      <td width="30px"></td>
+      <td width="20px"></td>
+      <td width="150px" align="center">订单编号</td>
+      <td width="90px" align="left">买家</td>
+      <td width="160px" align="center">成交时间</td>
+      <td width="80px" align="center">标记</td>
+      <td align="center">商品名称</td></tr>
+    </table>
+    <div style="height:340px; overflow:scroll;display:none;" class="has-orders-show">
+      <table  valign='middle' id="order-details" class="table table-hover" style="margin-bottom:0px;">
+        <tr id="place-holder">
+        <td width="75px" align="center"><td>
+        <td width="20px" align="center"></td>
+        <td width="36px"></td>
+        <td width="150px" align="center"></td>
+        <td width="90px" align="left"></td>
+        <td width="150px" align="center"></td>
+        <td width="80px" align="center"></td>
+        <td align="center"></td></tr>
+      </table>
+    </div>
+    <table width="100%" class="has-no-orders-show"><tr><td align="center">
+      <button id="getOrdersBtn" class="btn btn-primary btn-circle btn-xl" style="margin: 10px 0 10px 0;">统计订单</button>
+      <div style="margin-bottom:220px;">
+        <select class="selectpicker" id="mark-selecter" multiple>
+          <option data-content='<i style="height:17px;width:1px;padding-left:17px;overflow:hidden;vertical-align:middle;font-size:0px;display:inline-block;background:url(https://img.alicdn.com/tps/i1/TB1heyGFVXXXXXpXXXXR3Ey7pXX-550-260.png) no-repeat -176px -176px;"></i>灰色标记'
+          value='-176px -176px' selected>
+          </option>
+          <option data-content='<i style="height:17px;width:1px;padding-left:17px;overflow:hidden;vertical-align:middle;font-size:0px;display:inline-block;visibility:visible;background:url(https://img.alicdn.com/tps/i1/TB1heyGFVXXXXXpXXXXR3Ey7pXX-550-260.png) no-repeat -140px -207px;"></i>橙色标记'
+          value='-140px -207px'>
+          </option>
+          <option data-content='<i style="height:17px;width:1px;padding-left:17px;overflow:hidden;vertical-align:middle;font-size:0px;display:inline-block;visibility:visible;background:url(https://img.alicdn.com/tps/i1/TB1heyGFVXXXXXpXXXXR3Ey7pXX-550-260.png) no-repeat -100px -207px;"></i>红色标记'
+          value='-100px -207px'>
+          </option>
+          <option data-content='<i style="height:17px;width:1px;padding-left:17px;overflow:hidden;vertical-align:middle;font-size:0px;display:inline-block;visibility:visible;background:url(https://img.alicdn.com/tps/i1/TB1heyGFVXXXXXpXXXXR3Ey7pXX-550-260.png) no-repeat -120px -207px;"></i>绿色标记'
+          value='-120px -207px'>
+          </option>
+          <option data-content='<i style="height:17px;width:1px;padding-left:17px;overflow:hidden;vertical-align:middle;font-size:0px;display:inline-block;visibility:visible;background:url(https://img.alicdn.com/tps/i1/TB1heyGFVXXXXXpXXXXR3Ey7pXX-550-260.png) no-repeat -80px -207px;"></i>紫色标记'
+          value='-80px -207px'>
+          <option data-content='<i style="height:17px;width:1px;padding-left:17px;overflow:hidden;vertical-align:middle;font-size:0px;display:inline-block;visibility:visible;background:url(https://img.alicdn.com/tps/i1/TB1heyGFVXXXXXpXXXXR3Ey7pXX-550-260.png) no-repeat -60px -207px;"></i>蓝色标记'
+          value='-60px -207px'>
+          </option>
+        </select>
+      </div>
+      <div id="alert-to-order-page" class="hide bg-warning"><b>此按钮只有在淘宝后台“已卖出宝贝”页面可用</b></div>
+    </td></tr></table>
+    
+    <div class="operate-area" style="display:none;margin-top: 10px;">
+      <button id="fillOrderBtn" class="btn btn-primary">开始下单</button>
+      <button id="markBtn" class="btn btn-info">开始标记</button>
+      <button id="resetBtn" class="btn btn-danger">重置工具</button>
+    </div>
+    <div class="progress" style="display:none;margin: 0px;
+    height: 10px;
+    width: 100%;
+    border-radius: 0px;
+    box-shadow: none;
+    position: fixed; bottom: 0;">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+      </div>
+    </div>
+  </body>
+</html>
+

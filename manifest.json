@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+
+  "name": "自动下单小工具",
+  "description": "自动收集未采购的订单，并且填入采购页面",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://trade.taobao.com/trade/itemlist/*","https://gongxiao.tmall.com/distributor/order/*"],
+      "js": ["jquery-3.0.0.js", "content.js", "myscript.js"]
+    },
+    {
+      "matches": ["https://trade.taobao.com/trade/memo/*"],
+      "js": ["jquery-3.0.0.js", "mark.js"]
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["jquery-3.0.0.js","general.js"]
+    }
+  ]
+}
