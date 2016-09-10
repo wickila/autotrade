@@ -18,15 +18,15 @@
   "content_scripts": [
     {
       "matches": ["https://trade.taobao.com/trade/itemlist/*","https://gongxiao.tmall.com/distributor/order/*"],
-      "js": ["jquery-3.0.0.js", "content.js", "myscript.js"]
+      "js": ["jquery.js", "extensions/main.js"]
     },
     {
       "matches": ["https://trade.taobao.com/trade/memo/*"],
-      "js": ["jquery-3.0.0.js", "mark.js"]
+      "js": ["jquery.js", "extensions/mark.js"]
     },
     {
       "matches": ["*://*/*"],
-      "js": ["jquery-3.0.0.js","general.js"]
+      "js": ["jquery.js","extensions/general.js"]
     }
   ]
 }
