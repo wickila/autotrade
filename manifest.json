@@ -3,7 +3,7 @@
 
   "name": "自动下单小工具",
   "description": "自动收集未采购的订单，并且填入采购页面",
-  "version": "1.0",
+  "version": "1.1.0",
 
   "browser_action": {
     "default_icon": "icon.png",

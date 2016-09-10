@@ -3,7 +3,7 @@
  * **/
 $(function () {
     /*
-     * 跳转到下单页面
+     * 跳转到淘宝供销平台的下单页面
      * */
     window.gotoTradePage = function () {
         window.selected_orders = [];
