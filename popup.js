@@ -100,20 +100,24 @@ document.addEventListener('DOMContentLoaded', function() {
           times: window.get_orders_times++,
           markStyle: $("#mark-selecter").val()
         }, function(result) {
-          var hasNext = result.hasNext;
-          var orders = result.orders;
-          if (orders.length>0) {
-            for (var i = 0; i < orders.length; i++) {
-              var order = orders[i];
-              insert_order_cell(order,window.insert_order_cell_index++);
+          if(result){
+            var hasNext = result.hasNext;
+            var orders = result.orders;
+            if (orders.length>0) {
+              for (var i = 0; i < orders.length; i++) {
+                var order = orders[i];
+                insert_order_cell(order,window.insert_order_cell_index++);
+              }
             }
-          } 
-          if(orders.length==0 || !hasNext) {
-            $(".progress").fadeOut(function(){
-              $(".operate-area").show();
-            });
-            chrome.storage.local.set({staus:"get_orders_complete"});
-            clearInterval(window.load_order_interval);
+            if(orders.length==0 || !hasNext) {
+              $(".progress").fadeOut(function(){
+                $(".operate-area").show();
+              });
+              chrome.storage.local.set({staus:"get_orders_complete"});
+              clearInterval(window.load_order_interval);
+            }
+          }else{
+            chrome.tabs.executeScript(null,{code:"alert('出现了点小意外,请刷新淘宝页面再尝试一下:)');"});
           }
         });
       });
