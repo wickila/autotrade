@@ -12,7 +12,7 @@
 
 请按照以下步骤操作安装:
 
-1. [下载zip压缩包]([https://codeload.github.com/wickila/autotrade/zip/master)后解压缩。
+1. [下载zip压缩包](https://codeload.github.com/wickila/autotrade/zip/master)后解压缩。
 2. 在Chrome浏览器的地址栏中输入：chrome://extensions 后回车进入浏览器的扩展程序管理页面。
 3. 点击勾选页面右上角的`开发者选项`后，出现`加载已解压的扩展程序...`按钮。
 4. 点击`加载已解压的扩展程序…`后，选择第一步中解压缩得到的文件夹。如果看到扩展程序列表里面出现"自动下单助手"，同时浏览器的右上方会出现一朵娇嫩的小红花，则说明安装成功。
