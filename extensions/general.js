@@ -31,5 +31,5 @@ $(function () {
             var url = "https://trade.taobao.com/trade/itemlist/list_sold_items.htm";
             window.open(url, "_self");
         });
-    }
+    };
 });
