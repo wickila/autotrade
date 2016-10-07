@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "自动下单小工具",
-  "description": "自动收集未采购的订单，并且填入采购页面",
-  "version": "1.1.0",
+  "name": "淘宝分销助手",
+  "description": "淘宝分销助手是一个Chrome插件。用来帮助有分销业务，需要下采购单的淘宝卖家提高下采购单的效率。详情见:https://github.com/wickila/autotrade",
+  "version": "0.9.0",
   "icons": { "16": "icon16.png",
            "48": "icon48.png",
           "128": "icon128.png" },

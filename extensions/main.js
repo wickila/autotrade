@@ -11,11 +11,12 @@ $(function () {
         if (r != null) return unescape(r[2]);
         return null; //返回参数值
     }
+
     /*
      * 获取当前页面的订单信息
      * */
     window.getCurrentOrderIds = function (markStyle) {
-        var items = [];
+        var orders = [];//本页订单
         window.mark_style = markStyle;
         //遍历本页面中每条订单div
         $("div.trade-order-main").each(function () {
@@ -34,26 +35,48 @@ $(function () {
                 var id = order_div.data("reactid").split("$")[1];
                 var buyer = order_div.find("a.buyer-mod__name___S9vit").text();
                 var time = order_div.find('span[data-reactid=".0.4.3:$' + id + '.0.1.0.0.0.6"]').text();
-                var img_div = order_div.find('img[data-reactid=".0.4.3:$' + id + '.1.1.$0.$0.0.0.0.0"]');
-                var detail_div = order_div.find('a[data-reactid=".0.4.3:$' + id + '.1.1.$0.$5.0.1.$0.0"]');
-                var thumb = "https://" + img_div.attr("src");
-                var url = "https://" + detail_div.attr("href");
                 var flag = order_div.find('#flag').parent().html();
                 flag = flag.replace('href="', 'href="https://trade.taobao.com');
                 flag = flag.replace('url(//img', 'url(https://img');
-                items.push({
+
+                var items = [];
+                order_div.find(".suborder-mod__item___dY2q5").each(function () {
+                    var item_div = $(this);
+                    // 商品商家编号
+                    var product_id = item_div.find('span[data-reactid=".0.4.3:$' + id + '.1.1.$0.$0.0.1.3:$0.1"]').text();
+                    var name = item_div.find('span[data-reactid=".0.4.3:$' + id + '.1.1.$0.$0.0.1.0.0.1"]').text();
+                    var color = item_div.find('span[data-reactid=".0.4.3:$' + id + '.1.1.$0.$0.0.1.1.$0.2"]').text();
+                    var price = item_div.find('span[data-reactid=".0.4.3:$' + id + '.1.1.$0.$1.0.1.1"]').text();
+                    var count = item_div.find('p[data-reactid=".0.4.3:$' + id + '.1.1.$0.$2.0.0"]').text();
+                    var ship = item_div.find('span.text-mod__link___36nmM').text();//发货状态
+                    var img_div = order_div.find('img[data-reactid=".0.4.3:$' + id + '.1.1.$0.$0.0.0.0.0"]');
+                    var detail_div = order_div.find('a[data-reactid=".0.4.3:$' + id + '.1.1.$0.$5.0.1.$0.0"]');
+                    var thumb = "https://" + img_div.attr("src");
+                    var url = "https://" + detail_div.attr("href");
+                    var item = {
+                        "product_id": product_id,
+                        "name": name,
+                        "color": color,
+                        "price": price,
+                        "count": count,
+                        "ship": ship,
+                        "thumb": thumb,
+                        "url": url
+                    }
+                    items.push(item);
+                });
+
+                orders.push({
                     id: id,
                     buyer: buyer,
                     time: time,
-                    thumb: thumb,
-                    url: url,
                     flag: flag,
-                    name: order_div.find('span[data-reactid=".0.4.3:$' + id + '.1.1.$0.$0.0.1.0.0.1"]').text(),
+                    items: items,
                     selected: false
                 });
             }
         });
-        return items;
+        return orders;
     }
     /*
      * 跳转到下一页
