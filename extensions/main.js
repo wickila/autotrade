@@ -21,7 +21,7 @@ $(function () {
         //遍历本页面中每条订单div
         $("div.trade-order-main").each(function () {
             var order_div = $(this);
-            var trade_btn = order_div.find("a.button-mod__button___2EmeL");//发货按钮
+            var trade_btn = order_div.find("a:contains('发货')");//发货按钮
             var ms = order_div.find("#flag").find("i").attr("style");
             var mark_style_match = false;
             for (var i = 0; i < window.mark_style.length; i++) {

@@ -3,7 +3,7 @@
 
   "name": "淘宝分销助手",
   "description": "淘宝分销助手是一个Chrome插件。用来帮助有分销业务，需要下采购单的淘宝卖家提高下采购单的效率。详情见:https://github.com/wickila/autotrade",
-  "version": "0.9.0",
+  "version": "0.9.0.1",
   "icons": { "16": "icon16.png",
            "48": "icon48.png",
           "128": "icon128.png" },

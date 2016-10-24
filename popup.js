@@ -31,7 +31,7 @@ $(function () {
         //     order.name));
         var orderCell = "<th align='center' rowspan='{9}'>" + (index < 10 ? "0" + index : index) + "</th>" +
             "<td align='center' rowspan='{9}'><input class='selecter' data-id='{1}' type='checkbox'></td>" +
-            "<td width='40px' align='center'>{10}</td>" +
+            "<td width='40px' align='center' rowspan='{9}'>{10}</td>" +
             "<td align='center' rowspan='{9}'><a href='{3}' target='_blank'>{4}</a></td>" +//订单编号
             "<td rowspan='{9}'>{5}</td>" +//买家
             "<td class='small' rowspan='{9}'>{6}</td>";//时间
@@ -51,7 +51,7 @@ $(function () {
             order.flag));
         for (var i = 1; i < order.items.length; i++) {
             var item = order.items[i];
-            $("#order-details").append(String.format("<tr id='{0}''>" + itemCell + "</tr>", order.id, order.id, item.thumb,
+            $("#order-details").append(String.format("<tr id='{0}'>" + itemCell + "</tr>", order.id, order.id, item.thumb,
                 item.url, order.id, order.buyer,
                 order.time, item.count, item.name,
                 0));
